@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Contains workflow_twilio_notify.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\workflow_twilio_notify\Event\ModerationEvent;
+
+/**
+ * Implements hook_help().
+ */
+function workflow_twilio_notify_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the workflow_twilio_notify module.
+    case 'help.page.workflow_twilio_notify':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function workflow_twilio_notify_theme() {
+  return [
+    'workflow_twilio_notify' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+
+/**
+ * Implement hook_entity_update
+ */
+function workflow_twilio_notify_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
+  if($entity->bundle() != "content_moderation_state") {
+    return;
+  }
+  \Drupal::service('event_dispatcher')->dispatch(ModerationEvent::MODERATION_PRESAVE, new ModerationEvent($entity));
+}

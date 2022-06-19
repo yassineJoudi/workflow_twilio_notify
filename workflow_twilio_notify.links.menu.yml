@@ -1,0 +1,16 @@
+
+# Notify menu items definition
+entity.notify.collection:
+  title: 'Notify'
+  route_name: entity.notify.collection
+  description: 'List Notify (bundles)'
+  parent: workflow_twilio_notify.structure
+  weight: 99
+
+# Notify menu items definition
+entity.notify.configuration:
+  title: 'Twilio Notification'
+  route_name: workflow_twilio_notify.structure
+  description: 'Notify'
+  parent: system.admin_structure
+  weight: 99

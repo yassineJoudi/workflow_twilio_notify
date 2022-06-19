@@ -1,0 +1,8 @@
+services:
+    workflow_twilio_notify.notication:
+        class: Drupal\workflow_twilio_notify\Service\Notification
+        arguments: ['@sms.provider']
+    workflow_twilio_notify.modiration.presave:
+        class: Drupal\workflow_twilio_notify\EventSubscriber\ModirationSubscriber
+        tags:
+        - {name: event_subscriber}

@@ -1,0 +1,10 @@
+name: 'workflow_twilio_notify'
+description: 'Create and send notification sms on change modiration state in workflow'
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal: workflow
+  - drupal: content_moderation
+  - drupal: token
+  - drupal: sms_twilio

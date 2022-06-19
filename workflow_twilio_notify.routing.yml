@@ -1,0 +1,7 @@
+workflow_twilio_notify.structure:
+  path: '/admin/structure/notify'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Twilio Notify'
+  requirements:
+    _permission: 'administer_twilio_notify_configurations'

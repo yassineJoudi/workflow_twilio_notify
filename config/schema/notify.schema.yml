@@ -1,0 +1,12 @@
+workflow_twilio_notify.notify.*:
+  type: config_entity
+  label: 'Notify config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
