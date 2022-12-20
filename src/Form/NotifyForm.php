@@ -7,14 +7,19 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\AppendCommand;
+use Drupal\workflow_twilio_notify\Service\Notification;
 
 /**
- * Class NotifyForm.
+ * Class NotifyForm for create template by workflow state.
  */
 class NotifyForm extends EntityForm {
 
-  protected $workflow;
-
+  /**
+   * Create an notification object.
+   *
+   * @param \Drupal\workflow_twilio_notify\Service\Notification $workflow
+   *   The notification manager.
+   */
   public function __construct() {
     $this->workflow = \Drupal::service('workflow_twilio_notify.notication');
   }
@@ -69,15 +74,15 @@ class NotifyForm extends EntityForm {
     $form['template']['from_state'] = [
       '#type' => 'select',
       '#required' => TRUE,
-      '#title' => $this->t('De l\'état'),
-      '#options' => !empty($notifications->get('workflow')) ? $this->workflow->_prepared_workflow_options($notifications->get('workflow')) : [],
+      '#title' => $this->t("De l'état"),
+      '#options' => !empty($notifications->get('workflow')) ? $this->workflow->getPreparedWorkflowOptions($notifications->get('workflow')) : [],
       '#default_value' => $notifications->get('from_state'),
     ];
     $form['template']['to_state'] = [
       '#type' => 'select',
       '#required' => TRUE,
-      '#title' => $this->t('Vers l\'état'),
-      '#options' => !empty($notifications->get('workflow')) ? $this->workflow->_prepared_workflow_options($notifications->get('workflow')) : [],
+      '#title' => $this->t("Vers l'étaté"),
+      '#options' => !empty($notifications->get('workflow')) ? $this->workflow->getPreparedWorkflowOptions($notifications->get('workflow')) : [],
       '#default_value' => $notifications->get('to_state'),
     ];
     $form['template']['message'] = [
@@ -93,11 +98,11 @@ class NotifyForm extends EntityForm {
       '#format' => 'full_html',
       '#default_value' => $notifications->get('recipients'),
       '#required' => TRUE,
-      "#description" => $this->t('Le champ destinataires contient des adresses mail séparées par des virgules.')
+      '#description' => $this->t('Le champ destinataires contient des adresses mail séparées par des virgules.'),
     ];
     $form['template']['token_tree'] = [
       '#theme' => 'token_tree_link',
-      '#token_types' => array('node'),
+      '#token_types' => ['node'],
       '#show_restricted' => TRUE,
       '#weight' => 90,
     ];
@@ -127,6 +132,9 @@ class NotifyForm extends EntityForm {
     $form_state->setRedirectUrl($notify->toUrl('collection'));
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getListOfStates(array &$form, FormStateInterface $form_state) {
     $options = "<option></option>";
     $type = $form_state->getValue('workflow');
@@ -136,9 +144,9 @@ class NotifyForm extends EntityForm {
     }
     $response = new AjaxResponse();
     $response->addCommand(new RemoveCommand('select[name="from_state"] option'))
-             ->addCommand(new RemoveCommand('select[name="to_state"] option'))
-             ->addCommand(new AppendCommand('select[name="to_state"]', $options))
-             ->addCommand(new AppendCommand('select[name="from_state"]', $options));
+      ->addCommand(new RemoveCommand('select[name="to_state"] option'))
+      ->addCommand(new AppendCommand('select[name="to_state"]', $options))
+      ->addCommand(new AppendCommand('select[name="from_state"]', $options));
     return $response;
   }
 

@@ -37,7 +37,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "gateway" = "gateway",
  *     "from_state" = "from_state",
  *     "to_state" = "to_state",
- *     "message" = "message", 
+ *     "message" = "message",
  *     "recipients" = "recipients",
  *   },
  *   links = {
@@ -80,7 +80,7 @@ class Notify extends ConfigEntityBase implements NotifyInterface {
    */
   protected $from_state;
 
-   /**
+  /**
    * The Notification Template current state.
    *
    * @var string
@@ -88,7 +88,7 @@ class Notify extends ConfigEntityBase implements NotifyInterface {
   protected $to_state;
 
 
-   /**
+  /**
    * The Notification Template current state.
    *
    * @var string
@@ -101,7 +101,7 @@ class Notify extends ConfigEntityBase implements NotifyInterface {
    * @var string
    */
   protected $recipients;
-  
+
   /**
    * The Notification Template current state.
    *
