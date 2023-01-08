@@ -11,16 +11,23 @@ use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
  * @see Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  */
-class NotifyHtmlRouteProvider extends AdminHtmlRouteProvider {
+class NotifyHtmlRouteProvider extends AdminHtmlRouteProvider
+{
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getRoutes(EntityTypeInterface $entity_type) {
-    $collection = parent::getRoutes($entity_type);
+    /**
+     * Routes.
+     *
+     * @return array
+     *
+     * @param \Symfony\Component\HttpKernel\Event\TerminateEvent $event
+     * Send notify by sms or return null if entity is not new.     
+     */
+    public function getRoutes(EntityTypeInterface $entity_type) 
+    {
+          $collection = parent::getRoutes($entity_type);
 
-    // Provide your custom entity routes here.
-    return $collection;
-  }
+          // Provide your custom entity routes here.
+          return $collection;
+    }
 
 }
